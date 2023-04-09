@@ -1,3 +1,4 @@
+@import "../../utils/colors";
 .face-snap-card {
   box-sizing: border-box;
   width: 50%;
@@ -18,10 +19,10 @@
 
 .snapped {
   background-color: rgba(lightgreen, 0.4);
-  color: darkgreen;
+  color: $color-snapped;
   button {
     box-shadow: lightgreen 3px 3px 7px;
-    color: darkgreen;
+    color: $color-snapped;
     &:active {
       box-shadow: lightgreen 0 0 5px;
     }

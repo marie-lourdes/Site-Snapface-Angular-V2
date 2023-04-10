@@ -13,7 +13,12 @@ import { interval, Observable } from 'rxjs';
 export class AppComponent implements OnInit {
 
   ngOnInit() {
-    const interval$ = interval(1000)// interval() genere un observable, la norme veut que lon ajoute un $ a la variable qui stocke un Observable
-    console.log(interval$) // affiche l objet Observable, et quand on souscrit affiche la class SafeSubscriber, les constructors et la collection de callbacks "partials Observer" de subscribe(next(value), err(), complete())
+    // interval() genere un Observable, la norme veut que lon ajoute un $ a la variable qui stocke un Observable
+    const interval$ = interval(1000).subscribe( value => console.log(value) )
+    // la fonction callBack est nommé next() par convention, ici elle est anonyme
+    // la collection de callback dans subscribe() s appelle un Observer
+
+    console.log(interval$) /* affiche l objet Observable et sa methode subscribe, et quand on souscrit, n affiche plus l objet Observable mais affiche la class SafeSubscriber,
+    les constructors et la collection de callbacks "partials Observer" de subscribe(next(value), err(), complete())*/
   }
 }

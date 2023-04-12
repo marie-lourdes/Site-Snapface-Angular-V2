@@ -18,8 +18,9 @@ export class AppComponent implements OnInit {
   ngOnInit() {
 
     //propriété de la class, l Observable est souscrit avec le pipe async et qui  insere et affiche les emissions dans le DOM a partir  le template de AppComponent
-    this.interval$ = interval(1000)
-
+    setTimeout(()=> {
+      this.interval$ = interval(1000)
+    },6000 )
     /* interval() genere un Observable, la norme veut que lon ajoute un $ a la variable qui stocke un Observable
     // la fonction callBack  de subscribe()est nommé next() par convention, ici elle est anonyme
     //subscribe(next(value), err(), complete())
@@ -47,6 +48,7 @@ export class AppComponent implements OnInit {
 
     console.log(interval$) /* affiche l objet Observable et sa methode subscribe, et quand on souscrit, n affiche plus l objet Observable mais affiche la class SafeSubscriber,
     les constructors et la collection de callbacks "partials Observer" de subscribe(next(value), err(), complete())*/
-
+    
   }
+  
 }

@@ -13,7 +13,7 @@ import { interval, Observable } from 'rxjs';
 
 export class AppComponent implements OnInit {
 
-  interval$!: Observable<number>; //propriété de la class
+  interval$!: Observable<number>; //propriété de la class, de type objet Observable, et les emissions de type  number entre chevrons
  
   ngOnInit() {
 
@@ -34,12 +34,12 @@ export class AppComponent implements OnInit {
     // -une première souscription qui cree une instance de l Observable  qui emet les nombres croissants tous les 1 secondes
     const interval$ = interval(1000) // variable local de la fonction ngOnInit()
     // methode subscribe () souscrit à l obsevable a partir du typescript et les emissions affiché dans le typescript
-    interval$.subscribe( value => console.log(value))
+    interval$.subscribe(value => console.log(value))
 
     // -une deuxieme souscription qui crée une deuxieme instance de l Observable qui emt les nombres croissants tous les 1 seconde
     //mais l emissions des valeurs des nombres croissants demarre aapres 3 secondes
     //souscription à l interval au bout de 3 secondes
-    setTimeout(() => interval$.subscribe( value => console.log(value)), 3000);
+    setTimeout(() => interval$.subscribe(value => console.log(value)), 3000);
     /*         ou
     setTimeout (() => {
       interval$.subscribe(value => console.log(value));

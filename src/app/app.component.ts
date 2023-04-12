@@ -16,12 +16,20 @@ export class AppComponent implements OnInit {
     /* interval() genere un Observable, la norme veut que lon ajoute un $ a la variable qui stocke un Observable
     // la fonction callBack est nommé next() par convention, ici elle est anonyme
     // la collection de callbacks dans subscribe() s appelle un Observer
-    // pour une seule instance de l Observable avec une seule suscription
-
+    
+    // ** pour une seule instance de l Observable avec une seule suscription**
     const interval$ = interval(1000).subscribe( value => console.log(value));*/
     
+
+    // **pour deux instances de l Observables interval$ avec deux souscription**
+
+    // -une première souscription qui cree une instance de l Observable  qui emet les nombres croissants tous les 1 secondes
     const interval$ = interval(1000)
-    
+
+    interval$.subscribe( value => console.log(value))
+
+    // -une deuxieme souscription qui crée une deuxieme instance de l Observable qui emt les nombres croissants tous les 1 seconde
+    //mais l emissions des valeurs des nombres croissants demarre aapres 3 secondes
     //souscription à l interval au bout de 3 secondes
     setTimeout(() => 
     (interval$.subscribe( value => console.log(value))),

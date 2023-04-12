@@ -1,5 +1,6 @@
 /* import du partial _colors.scss qui est à la racine de l application path configuré dans angular.json*/
 @import "../../sass/utils/colors";
+
 .face-snap-card {
   box-sizing: border-box;
   width: 50%;
@@ -19,13 +20,13 @@
 }
 
 .snapped {
-  background-color: rgba(lightgreen, 0.4);
-  color: $color-snapped;
+  background-color: rgba($color-snapped-primary, 0.4);
+  color: $color-snapped-secondary;
   button {
-    box-shadow: lightgreen 3px 3px 7px;
-    color: $color-snapped;
+    box-shadow: $color-snapped-primary 3px 3px 7px;
+    color: $color-snapped-secondary;
     &:active {
-      box-shadow: lightgreen 0 0 5px;
+      box-shadow: $color-snapped-primary 0 0 5px;
     }
   }
 }

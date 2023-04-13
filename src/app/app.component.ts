@@ -13,12 +13,12 @@ import { interval, Observable } from 'rxjs';
 
 export class AppComponent implements OnInit {
 
-  interval$!: Observable<number>; //propriété de la class, de type objet Observable, et les emissions de type  number entre chevrons
+  intervalDom$!: Observable<number>; //propriété de la class, de type objet Observable, et les emissions de type  number entre chevrons
  
   ngOnInit() {
 
     //propriété de la class, l Observable est souscrit au bout de 6s avec le pipe async et qui  insere et affiche les emissions dans le DOM a partir  le template de AppComponent
-    setTimeout(() => this.interval$ = interval(1000), 6000 )
+    setTimeout(() => this.intervalDom$ = interval(1000), 6000 )
 
     /* interval() genere un Observable, la norme veut que lon ajoute un $ a la variable qui stocke un Observable
     // la fonction callBack  de subscribe()est nommé next() par convention, ici elle est anonyme

@@ -48,6 +48,10 @@ export class AppComponent implements OnInit {
     console.log(interval$) /* affiche l objet Observable et sa methode subscribe, et quand on souscrit, n affiche plus l objet Observable mais affiche la class SafeSubscriber,
     les constructors et la collection de callbacks "partials Observer" de subscribe(next(value), err(), complete())*/
     
+  // tous les 5s l observable emet les nombres croissants, si on veut emmetre les valeur par cing on transforme les emissions avec le modulo % , 
+  //si c est divisible par cinq et que le reste est 0 et on garde ses nombre divisible dans les emissions
+    const interval2$ = interval(5000);
+    interval2$.subscribe( val => console.log(val))
   }
   
 }

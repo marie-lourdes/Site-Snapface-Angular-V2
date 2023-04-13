@@ -1,6 +1,11 @@
 <!--<app-header></app-header>
 <router-outlet></router-outlet>-->
-<main>
+
+<main> 
+<!-- souscription au bout de 6 secondes a l Observable depuis le template avec le pipe async et qui insere les emision (emises tous les secondes)dans le template-->
     <p> {{intervalDom$ | async }}</p>
-    <p> {{intervalFilter$ | async }}</p>  <!-- souscription a l Observable depuis le template avec le pipe async et qui insere les emision dans le template-->
+
+ <!-- souscription a l Observable depuis le template avec le pipe async et qui insere les emision(emises tous les 100 millisencondes)dans le template
+ avec l operator de bas niveau qui traite les emissions et ne garde que les valeurs des emissions divisible par 5 avec un reste 0-->    
+    <p> {{intervalFilter$ | async }}</p> 
 </main>

@@ -8,6 +8,12 @@ body {
   margin: 0;
 }
 
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 800px;
+}
 button {
   background-color: transparent;
   box-sizing: border-box;

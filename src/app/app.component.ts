@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 //les observables deviennent des flux de données avec suscribe qui permet de manipuler les valeur emise de l observable 
 //import de la methode interval qui genere un Observable qui emet des nombres croissant avec un interval de 1000ms
 import { interval, Observable } from 'rxjs';
+import { filter, map } from "rxjs/operators"
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,7 @@ import { interval, Observable } from 'rxjs';
 export class AppComponent implements OnInit {
 
   intervalDom$!: Observable<number>; //propriété de la class, de type objet Observable, et les emissions de type  number entre chevrons
- 
+  intervalFilter$!: Observable<number>;
   ngOnInit() {
 
     //propriété de la class, l Observable est souscrit au bout de 6s avec le pipe async et qui  insere et affiche les emissions dans le DOM a partir  le template de AppComponent
@@ -52,6 +53,13 @@ export class AppComponent implements OnInit {
   //si c est divisible par cinq et que le reste est 0 et on garde ses nombre divisible dans les emissions
     const interval2$ = interval(5000);
     interval2$.subscribe( val => console.log(val))
+
+    //tous les 100millisencondes l interval emet les nombres croissants et l'operator ( introduit par la methode pipe())filter() traite que les emissions divisible par 5
+    // la soiscription est faite avec async dans le template, seuls les nombres divisibles par 5 apparaissant avec l operateur de bas niveau filter
+    //les operateurs de bas niveau tel que map() et filter() agissent directement sur les emissions de l Observable
+    this.intervalFilter$ = interval(100).pipe(
+      filter( value => value % 5 === 0 ), 
+    );  
   }
   
 }

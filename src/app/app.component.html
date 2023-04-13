@@ -1,5 +1,6 @@
 <!--<app-header></app-header>
 <router-outlet></router-outlet>-->
 <main>
-    <p> {{intervalDom$ | async }}</p> <!-- souscription a l Observable depuis le template avec le pipe async et qui insere les emision dans le template-->
+    <p> {{intervalDom$ | async }}</p>
+    <p> {{intervalFilter$ | async }}</p>  <!-- souscription a l Observable depuis le template avec le pipe async et qui insere les emision dans le template-->
 </main>

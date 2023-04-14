@@ -16,6 +16,7 @@ export class AppComponent implements OnInit {
 
   intervalDom$!: Observable<number>; //propriété de la class, de type objet Observable, et les emissions de type  number entre chevrons
   intervalFilter$!: Observable<number>;
+  intervalMapNumber$!: Observable<number>;
   ngOnInit() {
 
     //propriété de la class, l Observable est souscrit au bout de 6s avec le pipe async et qui  insere et affiche les emissions dans le DOM a partir  le template de AppComponent
@@ -59,6 +60,13 @@ export class AppComponent implements OnInit {
      -les operateurs de bas niveau tel que map() et filter() agissent directement sur les emissions de l Observable**/
     this.intervalFilter$ = interval(100).pipe(
       filter( value => value % 5 === 0 ), 
-    );  
+    ); 
+    
+    // Tranformez les emissionsde l observable: operateur map() branché à l observable deja existant interval$ et renvoit un nouvel observable ( l observable global) interbalMapNumber$
+    this.intervalMapNumber$ = interval$.pipe(
+      map( value => value * 10)
+    )
+
+
   }  
 }

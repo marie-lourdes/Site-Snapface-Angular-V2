@@ -1,3 +1,5 @@
+@use  "../sass/utils/colors";
+
 main {
     flex-direction: column;
 }
@@ -7,4 +9,9 @@ main {
     flex-wrap: wrap;
     flex-direction: column;
     width: 80%;   
+}
+
+.observable-interval {
+    color: colors.$color-interval;// avec @use un namespace "colors" est cree contrairement a @import
+    font-weight: 600;
 }

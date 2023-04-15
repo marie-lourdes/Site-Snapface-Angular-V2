@@ -70,24 +70,24 @@ export class AppComponent implements OnInit {
       map( value => value * 10)
     )
 
+       // Tranformez les emissions de l Observable original interval$ en transformant ses emissions en string avec une condition qui trie les nombre pair et impairs dans la chaine de caractere avec le modulo % 2: 
+    //operateur map() branché à l Observable deja existant interval$ et renvoit un nouvel observable ( l observable global) interbalMapPairImpair$
+    this.intervalMapPairImpair$ = interval$.pipe(
+      map(value => value % 2 === 0 
+        ? ` Ce nombre ${value} est pair`
+        : `Ce nombre ${value} est impair`) 
+        //le deuxieme map transforme l emission en string, bien que l Observable original sur lequel il est basé emet des nombre 
+        //ce sera l emission final transformé en string qui definit le type de l observable globale qui est le nouvel observable (intervalMapPairImpair$) renvoyé par les opérateurs
+    )
+
     // Tranformez les emissions de l Observable original interval$ en transformant ses emissions en string avec une condition qui trie les nombre pair et impairs dans la chaine de caractere avec le modulo % 20 ( nombre  augmente par dizaine): 
     //operateur map() branché à l Observable deja existant interval$ et renvoit un nouvel observable ( l observable global) interbalMapPairImpair$
-     this.intervalMapPairImpair$ = interval$.pipe(
+     this.intervalMapPairImpair2$ = interval$.pipe(
       map( value => value * 10),
       map(value => value % 20 === 0 
         ? ` Ce nombre ${value} est pair`
         : `Ce nombre ${value} est impair`
         ) 
-        //le deuxieme map transforme l emission en string, bien que l Observable original sur lequel il est basé emet des nombre 
-        //ce sera l emission final transformé en string qui definit le type de l observable globale qui est le nouvel observable (intervalMapPairImpair$) renvoyé par les opérateurs
-    )
-
-    // Tranformez les emissions de l Observable original interval$ en transformant ses emissions en string avec une condition qui trie les nombre pair et impairs dans la chaine de caractere avec le modulo % 2: 
-    //operateur map() branché à l Observable deja existant interval$ et renvoit un nouvel observable ( l observable global) interbalMapPairImpair$
-     this.intervalMapPairImpair2$ = interval$.pipe(
-      map(value => value % 2 === 0 
-        ? ` Ce nombre ${value} est pair`
-        : `Ce nombre ${value} est impair`) 
         //le deuxieme map transforme l emission en string, bien que l Observable original sur lequel il est basé emet des nombre 
         //ce sera l emission final transformé en string qui definit le type de l observable globale qui est le nouvel observable (intervalMapPairImpair$) renvoyé par les opérateurs
     )

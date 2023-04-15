@@ -23,6 +23,9 @@ main {
     padding:1rem;
     width: 30px;
     text-align: center;
+    &--width {
+        width: 250px;
+    }
     &:hover {
         // avec @use un namespace "colors" est cree contrairement a @import,
         // et on peut modifiér la variable et sa valeur du fichier importé avec @use..with

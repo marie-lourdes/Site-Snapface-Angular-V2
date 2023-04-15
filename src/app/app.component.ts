@@ -17,10 +17,11 @@ export class AppComponent implements OnInit {
   intervalDom$!: Observable<number>; //propriété de la class, de type objet Observable, et les emissions de type  number entre chevrons
   intervalFilter$!: Observable<number>;
   intervalMapNumber$!: Observable<number>;
+  intervalMapPairImpair$!: Observable<string>;
   ngOnInit() {
-
+    const interval$ = interval(1000) // variable local de la fonction ngOnInit()
     //propriété de la class, l Observable est souscrit au bout de 6s avec le pipe async et qui  insere et affiche les emissions dans le DOM a partir  le template de AppComponent
-    setTimeout(() => this.intervalDom$ = interval(1000), 6000 )
+    setTimeout(() => this.intervalDom$ = interval$, 6000 )
 
     /* interval() genere un Observable, la norme veut que lon ajoute un $ a la variable qui stocke un Observable
     // la fonction callBack  de subscribe()est nommé next() par convention, ici elle est anonyme
@@ -33,12 +34,11 @@ export class AppComponent implements OnInit {
 
     // **POUR DEUX INSTANCES de l Observable interval$ avec deux souscription**
 
-    // -une première souscription qui cree une instance de l Observable  qui emet les nombres croissants tous les 1 secondes
-    const interval$ = interval(1000) // variable local de la fonction ngOnInit()
+    // -une première souscription qui cree une instance de l Observable interval$  qui emet les nombres croissants tous les 1 secondes
     // methode subscribe () souscrit à l obsevable a partir du typescript et les emissions affiché dans le typescript
     interval$.subscribe(value => console.log(value))
 
-    // -une deuxieme souscription qui crée une deuxieme instance de l Observable qui emt les nombres croissants tous les 1 seconde
+    // -une deuxieme souscription qui crée une deuxieme instance de l Observable interval$ qui emet les nombres croissants tous les 1 seconde
     //mais l emissions des valeurs des nombres croissants demarre aapres 3 secondes
     //souscription à l interval au bout de 3 secondes
     setTimeout(() => interval$.subscribe(value => console.log(value)), 3000);
@@ -62,11 +62,21 @@ export class AppComponent implements OnInit {
       filter( value => value % 5 === 0 ), 
     ); 
     
-    // Tranformez les emissionsde l observable: operateur map() branché à l observable deja existant interval$ et renvoit un nouvel observable ( l observable global) interbalMapNumber$
+    // Tranformez les emissions de l Observable original interval$ en multipliant ses emission par 10: 
+    //operateur map() branché à l Observable deja existant interval$ et renvoit un nouvel observable ( l observable global) interbalMapNumber$
     this.intervalMapNumber$ = interval$.pipe(
       map( value => value * 10)
     )
 
-
+     // Tranformez les emissions de l Observable original interval$ en transformant ses emissions en string avec un condition qui trie les nombre pair et impairs dans la chaine de caractere avec le modulo % 2: 
+     //operateur map() branché à l Observable deja existant interval$ et renvoit un nouvel observable ( l observable global) interbalMapPairImpair$
+     this.intervalMapPairImpair$ = interval$.pipe(
+      map( value => value * 10),
+      map(value => value % 2 === 0 
+        ? ` Ce nombre ${value} est pair`
+        : `Ce nombre ${value} est impair`) 
+        //le deuxieme map tarnsforme l emission en string, bien que l Observable original sur lequel il est basé emet des nombre 
+        //ce sera l emission final transformé en string qui definit le type de l observable globale qui est le nouvel observable (intervalMapPairImpair$) renvoyé par les opérateurs
+    )
   }  
 }

@@ -19,6 +19,7 @@ export class AppComponent implements OnInit {
   intervalMapNumber$!: Observable<number>;
   intervalMapPairImpair$!: Observable<string>;
   intervalMapPairImpair2$!: Observable<string>;
+  intervalFilterMapPairImpair$!: Observable<string>;
   ngOnInit() {
     const interval$ = interval(1000) // variable local de la fonction ngOnInit()
     //propriété de la class, l Observable est souscrit au bout de 6s avec le pipe async et qui  insere et affiche les emissions dans le DOM a partir  le template de AppComponent
@@ -69,25 +70,36 @@ export class AppComponent implements OnInit {
       map( value => value * 10)
     )
 
-     // Tranformez les emissions de l Observable original interval$ en transformant ses emissions en string avec un condition qui trie les nombre pair et impairs dans la chaine de caractere avec le modulo % 20 ( nombre  augmente par dizaine): 
-     //operateur map() branché à l Observable deja existant interval$ et renvoit un nouvel observable ( l observable global) interbalMapPairImpair$
+    // Tranformez les emissions de l Observable original interval$ en transformant ses emissions en string avec une condition qui trie les nombre pair et impairs dans la chaine de caractere avec le modulo % 20 ( nombre  augmente par dizaine): 
+    //operateur map() branché à l Observable deja existant interval$ et renvoit un nouvel observable ( l observable global) interbalMapPairImpair$
      this.intervalMapPairImpair$ = interval$.pipe(
       map( value => value * 10),
       map(value => value % 20 === 0 
         ? ` Ce nombre ${value} est pair`
-        : `Ce nombre ${value} est impair`) 
-        //le deuxieme map tarnsforme l emission en string, bien que l Observable original sur lequel il est basé emet des nombre 
+        : `Ce nombre ${value} est impair`
+        ) 
+        //le deuxieme map transforme l emission en string, bien que l Observable original sur lequel il est basé emet des nombre 
         //ce sera l emission final transformé en string qui definit le type de l observable globale qui est le nouvel observable (intervalMapPairImpair$) renvoyé par les opérateurs
     )
 
-     // Tranformez les emissions de l Observable original interval$ en transformant ses emissions en string avec un condition qui trie les nombre pair et impairs dans la chaine de caractere avec le modulo % 2: 
-     //operateur map() branché à l Observable deja existant interval$ et renvoit un nouvel observable ( l observable global) interbalMapPairImpair$
+    // Tranformez les emissions de l Observable original interval$ en transformant ses emissions en string avec une condition qui trie les nombre pair et impairs dans la chaine de caractere avec le modulo % 2: 
+    //operateur map() branché à l Observable deja existant interval$ et renvoit un nouvel observable ( l observable global) interbalMapPairImpair$
      this.intervalMapPairImpair2$ = interval$.pipe(
       map(value => value % 2 === 0 
         ? ` Ce nombre ${value} est pair`
         : `Ce nombre ${value} est impair`) 
-        //le deuxieme map tarnsforme l emission en string, bien que l Observable original sur lequel il est basé emet des nombre 
+        //le deuxieme map transforme l emission en string, bien que l Observable original sur lequel il est basé emet des nombre 
         //ce sera l emission final transformé en string qui definit le type de l observable globale qui est le nouvel observable (intervalMapPairImpair$) renvoyé par les opérateurs
     )
-  }  
+
+    //Filtrez et tranformez les emissions de l Observable original interval$ : 
+    this.intervalFilterMapPairImpair$ = interval$.pipe(
+      filter(value => value % 3 === 0), //operateur filter() dans un premier temps filtre les nombres divisible par 3
+      map(value => value % 2 === 0 
+        ? ` Ce nombre ${value} est pair`
+        : `Ce nombre ${value} est impair`) 
+        /*Et dans une deuxieme temps, l'operateur map() recupere au travers du pipe les valeurs traité par filter() et transforme les valeurs des emissions en string,
+         en deux chaine de caractere dufferentes selon si le nombre est pair ou impair et renvoit le nouvel observable sotocké dans intervalMapFilterPairImpair$*/
+    )
+  }
 }

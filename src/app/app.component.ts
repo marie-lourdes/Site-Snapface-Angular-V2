@@ -61,7 +61,8 @@ export class AppComponent implements OnInit {
      -la souscription est faite avec async dans le template, seuls les nombres divisibles par 5 apparaissant avec l operateur de bas niveau filter
      -les operateurs de bas niveau tel que map() et filter() agissent directement sur les emissions de l Observable**/
     this.intervalFilter$ = interval(100).pipe(
-      filter( value => value % 5 === 0 ), 
+      filter( value => value % 5 === 0 ),
+      tap(value => this.logger(value)) 
     ); 
     
     // Tranformez les emissions de l Observable original interval$ en multipliant ses emission par 10: 
@@ -99,9 +100,16 @@ export class AppComponent implements OnInit {
       filter(value => value % 3 === 0), //operateur filter() dans un premier temps filtre les nombres divisible par 3
       map(value => value % 2 === 0 
         ? ` Ce nombre ${value} est pair`
-        : `Ce nombre ${value} est impair`) 
+        : `Ce nombre ${value} est impair`),
+        tap(value => this.logger(value))
         /*Et dans une deuxieme temps, l'operateur map() recupere au travers du pipe les valeurs traité par filter() et transforme les valeurs des emissions en string,
          en deux chaine de caractere dufferentes selon si le nombre est pair ou impair et renvoit le nouvel observable sotocké dans intervalMapFilterPairImpair$*/
     )
+
   }
+    /**CREATION DE LA FONTION LOGGER AVEC L OPERATEUR MAP QUI CREE UN EFFET SECONDAIRE, REAGIT AUX EMISSIONS MAIS NE LES MODIFIE PAS **/
+    //Declaration de la fonction hors de ngOnInit et initialistation a  l nterieur de ngOnInit 
+    logger(text:any) { //type any pour reutiliser l operateur tap et la fonction avec les emissions de type string ou autre type pour logger les emissions
+      console.log(`log: ${text}`);
+    }
 }

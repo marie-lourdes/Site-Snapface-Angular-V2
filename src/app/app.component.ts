@@ -71,6 +71,7 @@ export class AppComponent implements OnInit {
       map( value => value * 10),
       tap(value => console.log("log:",value))
       // operateur tap ne modifie pas les emissions, il permet de reagir aux emissions sans les modifier, ni celles traités par map()
+      //Si on ajoute un autre operateur, apres les emissions n etant pas modifier les emissions traités avant tap() traverse le tuyau pipe sans avoir été modifié par tap()
     )
 
        // Tranformez les emissions de l Observable original interval$ en transformant ses emissions en string avec une condition qui trie les nombre pair et impairs dans la chaine de caractere avec le modulo % 2: 
@@ -107,7 +108,7 @@ export class AppComponent implements OnInit {
     )
 
   }
-    /**CREATION DE LA FONTION LOGGER AVEC L OPERATEUR MAP QUI CREE UN EFFET SECONDAIRE, REAGIT AUX EMISSIONS MAIS NE LES MODIFIE PAS **/
+    /**CREATION DE LA METHODE LOGGER AVEC L OPERATEUR MAP QUI CREE UN EFFET SECONDAIRE, REAGIT AUX EMISSIONS MAIS NE LES MODIFIE PAS **/
     //Declaration de la fonction hors de ngOnInit et initialistation a  l nterieur de ngOnInit 
     logger(text:any) { //type any pour reutiliser l operateur tap et la fonction avec les emissions de type string ou autre type pour logger les emissions
       console.log(`log: ${text}`);

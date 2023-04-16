@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 //les observables deviennent des flux de données avec suscribe qui permet de manipuler les valeur emise de l observable 
 //import de la methode interval qui genere un Observable qui emet des nombres croissant avec un interval de 1000ms
 import { interval, Observable } from 'rxjs';
-import { filter, map } from "rxjs/operators"
+import { filter, map, tap} from "rxjs/operators"
 
 @Component({
   selector: 'app-root',
@@ -67,7 +67,9 @@ export class AppComponent implements OnInit {
     // Tranformez les emissions de l Observable original interval$ en multipliant ses emission par 10: 
     //operateur map() branché à l Observable deja existant interval$ et renvoit un nouvel observable ( l observable global) interbalMapNumber$
     this.intervalMapNumber$ = interval$.pipe(
-      map( value => value * 10)
+      map( value => value * 10),
+      tap(value => console.log("log:",value))
+      // operateur tap ne modifie pas les emissions, il permet de reagir aux emissions sans les modifier, ni celles traités par map()
     )
 
        // Tranformez les emissions de l Observable original interval$ en transformant ses emissions en string avec une condition qui trie les nombre pair et impairs dans la chaine de caractere avec le modulo % 2: 

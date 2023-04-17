@@ -21,7 +21,7 @@ main {
     color:$color-interval;// avec @use un namespace "colors" est cree contrairement a @import
     font-weight: 600;
     padding:1rem;
-    width: 30px;
+    width: 50%;
     text-align: center;
     &--width {
         width: 250px;

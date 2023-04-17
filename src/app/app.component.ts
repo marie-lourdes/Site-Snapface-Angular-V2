@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 //les observables deviennent des flux de données avec suscribe qui permet de manipuler les valeur emise de l observable 
 //import de la methode interval qui genere un Observable qui emet des nombres croissant avec un interval de 1000ms
 import { interval, Observable } from 'rxjs';
-import { filter, map, tap} from "rxjs/operators"
+import { filter, map, tap } from "rxjs/operators"
 
 @Component({
   selector: 'app-root',
@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     const interval$ = interval(1000) // variable local de la fonction ngOnInit()
     //propriété de la class, l Observable est souscrit au bout de 6s avec le pipe async et qui  insere et affiche les emissions dans le DOM a partir  le template de AppComponent
-    setTimeout(() => this.intervalDom$ = interval$, 6000 )
+    setTimeout(() => this.intervalDom$ = interval$, 6000)
 
     /* interval() genere un Observable, la norme veut que lon ajoute un $ a la variable qui stocke un Observable
     // la fonction callBack  de subscribe()est nommé next() par convention, ici elle est anonyme
@@ -61,14 +61,14 @@ export class AppComponent implements OnInit {
      -la souscription est faite avec async dans le template, seuls les nombres divisibles par 5 apparaissant avec l operateur de bas niveau filter
      -les operateurs de bas niveau tel que map() et filter() agissent directement sur les emissions de l Observable**/
     this.intervalFilter$ = interval(100).pipe(
-      filter( value => value % 5 === 0 ),
+      filter(value => value % 5 === 0),
       tap(value => this.logger(value)) 
     ); 
     
     // Tranformez les emissions de l Observable original interval$ en multipliant ses emission par 10: 
     //operateur map() branché à l Observable deja existant interval$ et renvoit un nouvel observable ( l observable global) interbalMapNumber$
     this.intervalMapNumber$ = interval$.pipe(
-      map( value => value * 10),
+      map(value => value * 10),
       tap(value => console.log("log:",value))
       // operateur tap ne modifie pas les emissions, il permet de reagir aux emissions sans les modifier, ni celles traités par map()
       //Si on ajoute un autre operateur, apres les emissions n etant pas modifier les emissions traités avant tap() traverse le tuyau pipe sans avoir été modifié par tap()
@@ -102,15 +102,17 @@ export class AppComponent implements OnInit {
       map(value => value % 2 === 0 
         ? ` Ce nombre ${value} est pair`
         : `Ce nombre ${value} est impair`),
+        // operateur tap(), pour creer un effet secondaire , reagir au emissions sans les modifier
+        //dans tap() nous appelons la methode logger si nous rajoutons un operateur apres les emissions traités avant tap() reste inchangé
         tap(value => this.logger(value))
         /*Et dans une deuxieme temps, l'operateur map() recupere au travers du pipe les valeurs traité par filter() et transforme les valeurs des emissions en string,
          en deux chaine de caractere dufferentes selon si le nombre est pair ou impair et renvoit le nouvel observable sotocké dans intervalMapFilterPairImpair$*/
     )
-
   }
-    /**CREATION DE LA METHODE LOGGER AVEC L OPERATEUR MAP QUI CREE UN EFFET SECONDAIRE, REAGIT AUX EMISSIONS MAIS NE LES MODIFIE PAS **/
-    //Declaration de la fonction hors de ngOnInit et initialistation a  l nterieur de ngOnInit 
-    logger(text:any) { //type any pour reutiliser l operateur tap et la fonction avec les emissions de type string ou autre type pour logger les emissions
-      console.log(`log: ${text}`);
-    }
+
+  /**CREATION DE LA METHODE LOGGER AVEC L OPERATEUR MAP QUI CREE UN EFFET SECONDAIRE, REAGIT AUX EMISSIONS MAIS NE LES MODIFIE PAS **/
+  //Declaration de la fonction hors de ngOnInit et initialistation a  l nterieur de ngOnInit 
+  logger(text:any):void { //type any pour reutiliser l operateur tap et la fonction avec les emissions de type string ou autre type pour logger les emissions
+    console.log(`log: ${text}`);
+  }  
 }

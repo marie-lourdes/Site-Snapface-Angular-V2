@@ -20,6 +20,7 @@ export class AppComponent implements OnInit {
   intervalMapPairImpair$!: Observable<string>;
   intervalMapPairImpair2$!: Observable<string>;
   intervalFilterMapPairImpair$!: Observable<string>;
+  
   ngOnInit() {
     const interval$ = interval(1000) // variable local de la fonction ngOnInit()
     //propriété de la class, l Observable est souscrit au bout de 6s avec le pipe async et qui  insere et affiche les emissions dans le DOM a partir  le template de AppComponent

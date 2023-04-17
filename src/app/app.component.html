@@ -2,28 +2,5 @@
 <router-outlet></router-outlet>-->
 
 <main> 
-<!-- souscription au bout de 6 secondes a l Observable depuis le template avec le pipe async et qui insere les emision (emises tous les secondes)dans le template-->
-    <p class="observable-interval"> {{ intervalDom$ | async }}</p>
 
- <!-- souscription a l Observable depuis le template avec le pipe async et qui insere les emision(emises tous les 100 millisencondes)dans le template
- avec l operator de bas niveau qui traite les emissions et ne garde que les valeurs des emissions divisible par 5 avec un reste 0-->    
-    <p class="observable-interval"> {{ intervalFilter$ | async }}</p> 
-    <section class="container">
-        <h1> Exercice Observable avec les operateurs et la methode pipe() pour implementer les operateurs de bas niveau</h1>
-        <article>
-            <h2> Exemple Observable de type number avec les emissions de valeurs transformées avec l operateur map() qui multiplie les emission par 10 et renvoit un nouvel Observable</h2>
-            <p class="observable-interval"> {{ intervalMapNumber$ | async }}</p>
-        </article>
-        <article>
-            <h2> Exemples Observable avec les emissions de valeurs pairs et impairs avec l opérateur filter() et map():</h2>
-            <p> Observable  dont les emissions sont traités et transformé en string avec une condition qui map les emissions divisible par deux (pair) avec le module % 2 et les nombres impair des emissions de l Observable original avec map et  le pipe | async qui souscrit et affiche les emissions dans le template </p>     
-            <p class="observable-interval observable-interval--width"> {{ intervalMapPairImpair$ | async }}</p>
-
-            <p> Premier operator map() qui transforme les emissions en nombre multiplié par 10 et avec un deuxieme operator map()  avec le modulo % 20 pour mapper et  transformer en string les emissions pair des nombres par dizaine et les impair
-            <p class="observable-interval observable-interval--width"> {{ intervalMapPairImpair2$ | async }}</p>
-
-            <p> Observable  dont les emissions sont traités avec filter( condition modulo % 3 === 0) et  map ( condition avec operateur ternaires etle  modulo % 2) avec la transformation en string de chaque emissions de l Observable originale (de type number) retourné dans un nouvel Observable(qui sera de type string)   et  le pipe | async qui souscrit et affiche les emissions dans le template </p>     
-            <p class="observable-interval observable-interval--width"> {{ intervalFilterMapPairImpair$ | async }}</p>
-        </article>
-    </section>
 </main>

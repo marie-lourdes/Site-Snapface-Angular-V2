@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 //les observables deviennent des flux de données avec suscribe qui permet de manipuler les valeur emise de l observable 
 //import de la methode interval qui genere un Observable qui emet des nombres croissant avec un interval de 1000ms
 import { interval, Observable, of } from 'rxjs';
-import { map,tap, mergeMap, exhaustMap,concatMap, delay} from "rxjs/operators"
+import { map, tap, mergeMap, exhaustMap, concatMap, switchMap, take, delay} from "rxjs/operators"
 
 @Component({
   selector: 'app-root',
@@ -40,8 +40,16 @@ export class AppComponent implements OnInit {
     // observable et propriété de la classe qui emet dans le Dom avec la souscription du pipe | async
     this.intervalDom$ = interval(500).pipe(
       map(value => value % 2 === 0 ? "rouge" : "jaune"),
+      take(10),
       tap(color => console.log(`La lumière s'allume en ${color}`)),//map() operateur bas niveau transforme les emissions number en string avec les couleurs, avec des couleurs en fonction des emision de nombre pairs et impairs
-      exhaustMap(color => this.getTrainObservable$(color)),
+      switchMap(color => this.getTrainObservable$(color)),
+      //switchMap() va souscrire a l observable interieur  a chaque emissions de l observable exterieur 
+      //mais si le precdent observable interieur n est pas complété ou en cours il annule la souscription et  il souscris l'observable suivant
+      // si one ne limite pas le nombre d emissions( take(10)), switchMap() continue a souscrire au observable qui suit en annulant les souscription des precedent observable qui ne sont pas complété
+      //avec le nombre d emission limité de l observable exterieur et le delay des observable interieur, à la 10eme emissions
+      //donc à la derniere emission(10eme) , il souscrit à nouveau à l observable interieur qui complete et ne sera pas annulé car aucun autre observable interieur est generé car l observable exterieur n emet plus et l operateur haut niveau switchMap ne recupere plsu ses emissions pour transmettre a la fonction callback ((value)=>..)  
+      //switchMap permet de recuperer l emission la plus recente
+
       //mergeMap Operateur haut niveau souscrit à l Observable interieur generé par l operateur of de la methode getTrainObservable$ 
       //via le pipe passe l emission à l argument de la methode getTrainObservable$
       //l'Observable haut niveau souscrivant à l Observable interieur, emettra les valeur de l emission de l observable interieur quand on souscrit à l obervable exterieur (intervalDom$) avec pipe async dans le template

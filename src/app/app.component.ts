@@ -41,10 +41,10 @@ export class AppComponent implements OnInit {
     this.intervalDom$ = interval(500).pipe(
       map(value => value % 2 === 0 ? "rouge" : "jaune"),
       tap(color => console.log(`La lumière s'allume en ${color}`)),//map() operateur bas niveau transforme les emissions number en string avec les couleurs, avec des couleurs en fonction des emision de nombre pairs et impairs
-      exhaustMap(color => this.getTrainObservable$(color)),
+      mergeMap(color => this.getTrainObservable$(color)),
       //mergeMap Operateur haut niveau souscrit à l Observable interieur generé par l operateur of de la methode getTrainObservable$ 
       //via le pipe passe l emission à l argument de la methode getTrainObservable$
-      //l'Observable haut niveau souscrivant à l Observable interieur, emettra les valeur de l emission de l observable interieur
+      //l'Observable haut niveau souscrivant à l Observable interieur, emettra les valeur de l emission de l observable interieur quand on souscrit à l obervable exterieur (intervalDom$) avec pipe async dans le template
       tap(value => console.log(` Le train n° ${value.trainIndex} de couleur ${value.color} est arrivé!` )),
       map( value => ` Le train n° ${value.trainIndex} de couleur ${value.color} est arrivé!` )
     )

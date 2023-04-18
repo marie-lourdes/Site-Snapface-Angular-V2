@@ -36,11 +36,14 @@ export class AppComponent implements OnInit {
     interval$.subscribe((val) => console.log(val))//souscription à l observable haut niveau généré par la fonction interval()
     // observable et propriété de la classe qui emet dans le Dom avec la souscription du pipe | async
     this.intervalDom$ = interval$;
+    //operateur of() cree un observable et emet en une seule sequence (ici les 4 chiffres en meme temps tous les 2 s)une quantité de variable et non un apres l autre
+    const intervalOf = of(1,2,3,4)
+    setInterval(()=> intervalOf.subscribe(value=>console.log(value)), 2000)
   }
   getTrainObservable$(color: "rouge" |"jaune"){
     const isRedTrain = color ==="rouge";
     isRedTrain ? this.redtrain++ : this.yellowTrain++
     const trainIndex = isRedTrain ? this.redtrain : this.yellowTrain
-    return of({color, trainIndex}) //operateur of() de creation d un observable avec les valeurs(un objet ici) souhaites en argument et  emises un apres l autre lors de la souscription
+    return of({color, trainIndex}) //operateur of() de creation d un observable avec les valeurs(un objet ici) souhaites en argument et  emises en une seule sequence lors de la souscription
   } 
 }

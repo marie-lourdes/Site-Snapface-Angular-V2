@@ -16,10 +16,7 @@ export class AppComponent implements OnInit {
 
   // propriétés de la classe qui font office de compteur incrementés par la fonction appellé dans l 'operateur haut niveau mergeMap()
   redtrain = 0;
-  yellowTrain = 0;
-
-  intervalDom$!: Observable<any>
-  
+  yellowTrain = 0; 
   ngOnInit() {
 
   /* const interval$ = interval(500).pipe(
@@ -38,11 +35,11 @@ export class AppComponent implements OnInit {
   */
 
     // observable et propriété de la classe qui emet dans le Dom avec la souscription du pipe | async
-    this.intervalDom$ = interval(500).pipe(
-      map(value => value % 2 === 0 ? "rouge" : "jaune"),
+    const lightObservable$ = interval(500).pipe(
+      map(value => value % 2 === 0 ? 'rouge' : 'jaune'),
       take(10),
       tap(color => console.log(`La lumière s'allume en ${color}`)),//map() operateur bas niveau transforme les emissions number en string avec les couleurs, avec des couleurs en fonction des emision de nombre pairs et impairs
-      switchMap(color => this.getTrainObservable$(color)),
+      mergeMap(color => this.getTrainObservable$(color)),
       //-switchMap() va souscrire a l observable interieur  a chaque emissions de l observable exterieur 
       //mais si le precdent observable interieur n est pas complété ou en cours il annule la souscription et  il souscris l'observable suivant
       // si one ne limite pas le nombre d emissions( take(10)), switchMap() continue a souscrire au observable qui suit en annulant les souscription des precedent observable qui ne sont pas complété
@@ -54,33 +51,21 @@ export class AppComponent implements OnInit {
       //via le pipe passe l emission à l argument de la methode getTrainObservable$
       //l'Observable haut niveau souscrivant à l Observable interieur, emettra les valeur de l emission de l observable interieur quand on souscrit à l obervable exterieur (intervalDom$) avec pipe async dans le template
       tap(value => console.log(` Le train n° ${value.trainIndex} de couleur ${value.color} est arrivé!` )),
-      map( value => ` Le train n° ${value.trainIndex} de couleur ${value.color} est arrivé!` )
-    )
-
-    //operateur of() cree un observable et emet en une seule sequence (ici les 4 chiffres en meme temps tous les 2 s)une quantité de variable et non un apres l autre
-    const intervalOf = of(1,2,3,4)
-   // setInterval(()=> intervalOf.subscribe(value=>console.log(value)), 2000)
-    
-
-   //operator bas niveau delay()
-    const intervalDom$ = interval(500).pipe(
-      map(value => value % 2 === 0 ? `ce nombre ${value} est rouge`: `ce nombre ${value} est jaune`  ),
-      delay(5000) //l observable commence a emmetre au bout de 5 seconde puis emet selon l interval de 500ms
-    ).subscribe(value => console.log("log interval observable avec delay() operator", value))
+    ).subscribe()
   }
 
-  getTrainObservable$(color: "rouge" |"jaune"){
-    const isRedTrain = color ==="rouge";
+  getTrainObservable$(color: 'rouge' |'jaune'){
+    const isRedTrain = color === 'rouge';
     isRedTrain ? this.redtrain++ : this.yellowTrain++
     const trainIndex = isRedTrain ? this.redtrain : this.yellowTrain
     console.log(` Le train n° ${trainIndex} de couleur ${color} est appelé!` )
     //operateur of() de creation d un observable avec les valeurs(un objet ici) souhaites en argument et  emises en une seule sequence lors de la souscription
     return of({color, trainIndex}).pipe(
-      delay(isRedTrain? 5000 : 6000) 
+      delay(isRedTrain ? 5000 : 6000) 
       //les emissions de l observable demarre apres 5 ou 6 s selon la couleur,
       /*mais a chaque fois of() cree un observable, et les emission demarre apres ce delay,
       s il s agissait du meme observable, les emission demarerai apres 5 ou 6s puis emetrait selon l interval qui lui est donné*/
     )
   }
-  
+
 }

@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 //les observables deviennent des flux de données avec suscribe qui permet de manipuler les valeur emise de l observable 
 //import de la methode interval qui genere un Observable qui emet des nombres croissant avec un interval de 1000ms
 import { interval, of } from 'rxjs';
-import { map, tap, take, delay, mergeMap, exhaustMap, concatMap, switchMap, } from "rxjs/operators"
+import { map, tap, take, delay, mergeMap, exhaustMap, concatMap, switchMap } from "rxjs/operators"
 
 @Component({
   selector: 'app-root',

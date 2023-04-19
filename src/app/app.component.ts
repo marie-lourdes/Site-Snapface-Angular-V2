@@ -41,8 +41,8 @@ export class AppComponent implements OnInit {
     ).subscribe(val=> console.log("log lightObservable",val));
   }
 
-  // creation de la methode qui genere les observable interieur les trains rouges et jaunes  avec leur couleur le numero
-  getTrainObservable$(color: 'rouge' |'jaune'){
+  // creation de la methode qui genere les observable interieur les trains rouges et les trains jaunes  avec leur couleur le numero
+  getTrainObservable$(color: 'rouge' |'jaune') {
     const isRedTrain = color === 'rouge';
     isRedTrain ? this.redtrain++ : this.yellowTrain++;
     const trainIndex = isRedTrain ? this.redtrain : this.yellowTrain;

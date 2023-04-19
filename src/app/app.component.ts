@@ -3,8 +3,8 @@ import { Component, OnInit } from '@angular/core';
 //import de l objet  Observable de la librairie rxjs pour la programmation reactive(avec les evenements et les valeurs des observables  qu on peut observer en temps réel) et permet de composer du code asynchrone
 //les observables deviennent des flux de données avec suscribe qui permet de manipuler les valeur emise de l observable 
 //import de la methode interval qui genere un Observable qui emet des nombres croissant avec un interval de 1000ms
-import { interval, Observable, of } from 'rxjs';
-import { map, tap, mergeMap, exhaustMap, concatMap, switchMap, take, delay} from "rxjs/operators"
+import { interval, of } from 'rxjs';
+import { map, tap, take, delay, mergeMap, exhaustMap, concatMap, switchMap, } from "rxjs/operators"
 
 @Component({
   selector: 'app-root',

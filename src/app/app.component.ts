@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 //les observables deviennent des flux de données avec suscribe qui permet de manipuler les valeur emise de l observable 
 //import de la methode interval qui genere un Observable qui emet des nombres croissant avec un interval de 1000ms
 import { interval, of } from 'rxjs';
-import { map, tap, take, delay, mergeMap, exhaustMap, concatMap, switchMap } from "rxjs/operators"
+import { map, tap, take, delay, mergeMap, exhaustMap, concatMap, switchMap } from "rxjs/operators";
 
 @Component({
   selector: 'app-root',
@@ -37,15 +37,15 @@ export class AppComponent implements OnInit {
       //via le pipe passe l emission à l argument de la methode getTrainObservable$
       //l'Observable haut niveau souscrivant à l Observable interieur, emettra les valeur de l emission de l observable interieur quand on souscrit à l obervable exterieur (intervalDom$) avec pipe async dans le template
       tap(value => console.log(` Le train n° %c${value.trainIndex} de couleur ${value.color} est arrivé!`, 
-      `color:${this.translateColor(value.color)};font-weight: 600`)),
+      `color:${this.translateColor(value.color)};font-weight: 600`))
     ).subscribe()
   }
 
   getTrainObservable$(color: 'rouge' |'jaune'){
     const isRedTrain = color === 'rouge';
-    isRedTrain ? this.redtrain++ : this.yellowTrain++
-    const trainIndex = isRedTrain ? this.redtrain : this.yellowTrain
-    console.log(` Le train n° %c${trainIndex} de couleur ${color} est appelé!`,`text-decoration: underline; color: ${this.translateColor(color)}` )
+    isRedTrain ? this.redtrain++ : this.yellowTrain++;
+    const trainIndex = isRedTrain ? this.redtrain : this.yellowTrain;
+    console.log(` Le train n° %c${trainIndex} de couleur ${color} est appelé!`,`text-decoration: underline; color: ${this.translateColor(color)}`);
     //operateur of() de creation d un observable avec les valeurs(un objet ici) souhaites en argument et  emises en une seule sequence lors de la souscription
     return of({ color, trainIndex }).pipe(
       delay(isRedTrain ? 5000 : 6000) 

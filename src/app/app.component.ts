@@ -19,22 +19,6 @@ export class AppComponent implements OnInit {
   yellowTrain = 0; 
   ngOnInit() {
 
-  /* const interval$ = interval(500).pipe(
-      map(value => value % 2 === 0 ? "rouge" : "jaune"),//map() operateur bas niveau transforme les emissions number en string avec les couleurs, avec des couleurs en fonction des emision de nombre pairs et impairs
-      mergeMap(color => this.getTrainObservable$(color)),
-      //mergeMap Operateur haut niveau souscrit à l Observable interieur generé par l operateur of de la methode getTrainObservable$ 
-      //via le pipe passe l emission à l argument de la methode getTrainObservable$
-      //l'Observable haut niveau souscrivant à l Observable interieur, emettra les valeur de l emission de l observable interieur
-      map( value => ` Le train n° ${value.trainIndex} de couleur ${value.color} est arrivé!` )
-
-    )
- 
-    //observable qui emet depuis le typescript, 
-    //Mise en commentaire: si on souscrit au meme observable avec subscribe et l un dans le template,il ya comme une fuite de memoire toutes les emissions ne sont pas loggué ou affiché dans le template
-    //interval$.subscribe((val) => console.log(val))//souscription à l observable haut niveau généré par la fonction interval()
-  */
-
-    // observable et propriété de la classe qui emet dans le Dom avec la souscription du pipe | async
     const lightObservable$ = interval(500).pipe(
       map(value => value % 2 === 0 ? 'rouge' : 'jaune'),
       take(10),
@@ -63,7 +47,7 @@ export class AppComponent implements OnInit {
     const trainIndex = isRedTrain ? this.redtrain : this.yellowTrain
     console.log(` Le train n° %c${trainIndex} de couleur ${color} est appelé!`,`text-decoration: underline; color: ${this.translateColor(color)}` )
     //operateur of() de creation d un observable avec les valeurs(un objet ici) souhaites en argument et  emises en une seule sequence lors de la souscription
-    return of({color, trainIndex}).pipe(
+    return of({ color, trainIndex }).pipe(
       delay(isRedTrain ? 5000 : 6000) 
       //les emissions de l observable demarre apres 5 ou 6 s selon la couleur,
       /*mais a chaque fois of() cree un observable, et les emission demarre apres ce delay,

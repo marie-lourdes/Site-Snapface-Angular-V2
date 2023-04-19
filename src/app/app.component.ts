@@ -43,14 +43,14 @@ export class AppComponent implements OnInit {
       take(10),
       tap(color => console.log(`La lumière s'allume en ${color}`)),//map() operateur bas niveau transforme les emissions number en string avec les couleurs, avec des couleurs en fonction des emision de nombre pairs et impairs
       switchMap(color => this.getTrainObservable$(color)),
-      //switchMap() va souscrire a l observable interieur  a chaque emissions de l observable exterieur 
+      //-switchMap() va souscrire a l observable interieur  a chaque emissions de l observable exterieur 
       //mais si le precdent observable interieur n est pas complété ou en cours il annule la souscription et  il souscris l'observable suivant
       // si one ne limite pas le nombre d emissions( take(10)), switchMap() continue a souscrire au observable qui suit en annulant les souscription des precedent observable qui ne sont pas complété
       //avec le nombre d emission limité de l observable exterieur et le delay des observable interieur, à la 10eme emissions
       //donc à la derniere emission(10eme) , il souscrit à nouveau à l observable interieur qui complete et ne sera pas annulé car aucun autre observable interieur est generé car l observable exterieur n emet plus et l operateur haut niveau switchMap ne recupere plsu ses emissions pour transmettre a la fonction callback ((value)=>..)  
       //switchMap permet de recuperer l emission la plus recente
 
-      //mergeMap Operateur haut niveau souscrit à l Observable interieur generé par l operateur of de la methode getTrainObservable$ 
+      //-mergeMap Operateur haut niveau souscrit à l Observable interieur generé par l operateur of de la methode getTrainObservable$ 
       //via le pipe passe l emission à l argument de la methode getTrainObservable$
       //l'Observable haut niveau souscrivant à l Observable interieur, emettra les valeur de l emission de l observable interieur quand on souscrit à l obervable exterieur (intervalDom$) avec pipe async dans le template
       tap(value => console.log(` Le train n° ${value.trainIndex} de couleur ${value.color} est arrivé!` )),

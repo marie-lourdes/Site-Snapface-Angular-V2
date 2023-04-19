@@ -40,7 +40,7 @@ export class AppComponent implements OnInit {
       `color:${this.translateColor(value.color)};font-weight: 600`))
     ).subscribe(val=> console.log("log lightObservable",val));
   }
-    
+
   // creation de la methode qui genere les observable interieur les trains rouges et les trains jaunes  avec leur couleur le numero
   getTrainObservable$(color: 'rouge' |'jaune') {
     const isRedTrain = color === 'rouge';
@@ -60,5 +60,7 @@ export class AppComponent implements OnInit {
   translateColor(color: 'rouge' | 'jaune') {
     return color === 'rouge' ? 'red' : 'yellow';
 
-  } 
+  }
+
+  
 }

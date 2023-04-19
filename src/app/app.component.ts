@@ -38,7 +38,7 @@ export class AppComponent implements OnInit {
       //l'Observable haut niveau souscrivant à l Observable interieur, emettra les valeur de l emission de l observable interieur quand on souscrit à l obervable exterieur (intervalDom$) avec pipe async dans le template
       tap(value => console.log(` Le train n° %c${value.trainIndex} de couleur ${value.color} est arrivé!`, 
       `color:${this.translateColor(value.color)};font-weight: 600`))
-    ).subscribe(val=> console.log("log lightObservable",val))
+    ).subscribe(val=> console.log("log lightObservable",val));
   }
 
   getTrainObservable$(color: 'rouge' |'jaune'){
@@ -59,5 +59,4 @@ export class AppComponent implements OnInit {
   translateColor(color: 'rouge' | 'jaune') {
     return color === 'rouge' ? 'red' : 'yellow';
   }
-
 }

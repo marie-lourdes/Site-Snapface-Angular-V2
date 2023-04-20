@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { interval } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 import { FaceSnap } from '../models/face-snap.model';
 import { FaceSnapsService } from '../services/face-snaps.service';
@@ -23,6 +24,13 @@ export class FaceSnapListComponent implements OnInit {
     // a chaque fois qu on sort et revient sur la page d autres instance de l Observable est créé avec subscribe 
     //et les flux des precedentes instances de l Observable continue à émettre car nous avons pas unsubscribe ou limiter les emissions
     //ce qu on appelle une fuite de memoire, il faut mettre en place une strategie de unsubscribe
-    const interval$ = interval(1000).subscribe(console.log)
+    const interval$ = interval(1000);
+
+    //**Observable avec strategie de unsubscribe pour eviter les fuite de memoire lorsqu on est pas sur cette page virtuel en limitant les emissions avec l operator bas niveau take() et completer l observable au bout de 10 emissions
+    interval$.pipe(
+      take(10),
+    ).subscribe(val=>console.log("observable avec strategie de unsubscribe avec(take(10)", val));
+
+   
   }
 }

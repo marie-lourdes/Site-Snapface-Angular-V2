@@ -13,7 +13,7 @@ import { FaceSnapsService } from '../services/face-snaps.service';
 export class FaceSnapListComponent implements OnInit, OnDestroy {
 
   faceSnaps!: FaceSnap[];
-  subjectDestroy$!: Subject<boolean>;
+  subjectDestroy$!: Subject<string>;
 
   constructor(private faceSnapsService: FaceSnapsService) { }
 
@@ -33,13 +33,21 @@ export class FaceSnapListComponent implements OnInit, OnDestroy {
     ).subscribe(val=>console.log("observable avec strategie de unsubscribe avec(take(10)", val));
 
     this.subjectDestroy$ = new Subject();
+    this.subjectDestroy$.subscribe(console.log)//le subject precise et log quand le component est detruit dans sa valeur emise, avec le subscribe toujours avant de definir les valeur d'un Subject
+    /* si on veut juste le faire emttre un evenement sans manipuler la valeur emise sans y souscrire directement au subject
+    mais qui servira à l operator takeUntil() comme argument pour stopper les emissions de l observable
+     - on y souscrit pas et garde l initialisation avec la nouvelle instance de Subject 
+     this.subjectDestroy$ = new Subject();
+     -et dans destroy la valeur emise ne sera pas manipulé ni loggué aucune reaction a l emission de la valeur
+     
+     */
 
     interval$.pipe(
-      takeUntil(this.subjectDestroy$)
+      takeUntil(this.subjectDestroy$)// l operator takeUntil() stoppe les emission de l Observable des que le Subject ou tout autre observable passé en argument a complété
     ).subscribe(val=>console.log("observable avec strategie de unsubscribe avec ngdestroy et takeUntil,Subject", val));
   }
 
   ngOnDestroy(): void {
-    this.subjectDestroy$.next(true)
+    this.subjectDestroy$.next("component detruit")// Le subject emet et complete avec une seule emission
   }
 }

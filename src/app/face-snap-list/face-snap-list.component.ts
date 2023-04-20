@@ -28,7 +28,7 @@ export class FaceSnapListComponent implements OnInit {
       error:(err)=> console.log("une erreur s est produite",err),
       complete:() => console.log("finished")
     })
-    subject.next(1)// emet comme un Observable mais de maniere synchrone la valeur 1 et 5 car n est pas appelé depuis une methode subscribe()
+    subject.next(1)// emet comme un Observable mais  le subscriber recoit les valeurs de  maniere synchrone la valeur 1 et 5 car n est pas appelé depuis une methode subscribe()
     subject.next(5)
     const timer$ = timer(5000)
     const interval$ = interval(1000).pipe(

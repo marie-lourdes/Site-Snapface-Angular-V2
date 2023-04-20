@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy} from '@angular/core';
-import { interval } from 'rxjs';
+import { interval, Subject } from 'rxjs';
 import { take } from 'rxjs/operators';
 
 import { FaceSnap } from '../models/face-snap.model';
@@ -13,6 +13,7 @@ import { FaceSnapsService } from '../services/face-snaps.service';
 export class FaceSnapListComponent implements OnInit, OnDestroy {
 
   faceSnaps!: FaceSnap[];
+  subjectDestroy$!: Subject<boolean>;
 
   constructor(private faceSnapsService: FaceSnapsService) { }
 
@@ -31,10 +32,12 @@ export class FaceSnapListComponent implements OnInit, OnDestroy {
       take(10),
     ).subscribe(val=>console.log("observable avec strategie de unsubscribe avec(take(10)", val));
 
+    this.subjectDestroy$ = new Subject();
+
     interval$.subscribe(val=>console.log("observable avec strategie de unsubscribe avec ngdestroy et takeUntil,Subject", val));
   }
 
   ngOnDestroy(): void {
-    
+    this.subjectDestroy$.next(true)
   }
 }

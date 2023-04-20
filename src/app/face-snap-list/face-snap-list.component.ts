@@ -24,8 +24,8 @@ export class FaceSnapListComponent implements OnInit {
     // le Subject peut emettre a plusieurs Observer, il est multicast alors que l 'Observable n a qu un seul Observer qui ecoute ses valeur dans le subscribe 
     //pour que le même Subject soit ecouté par un autre observer, on souscrit au Subject en indiquent un call back observer
     subject$.subscribe({ //*definition de l objet Observer et les callback  observers
-       // Observer: collection de callback observers dans le subscribe de Subject , implementer ensuite dans l Observable
-      //l observer ecoute les valeur 1 5 et les  valeurs de l Observable interval$
+    // Observer: collection de callback observers dans le subscribe de Subject , implementer ensuite dans l Observable
+    //l observer ecoute les valeur 1 5 et les  valeurs de l Observable interval$
       next:(val)=> console.log("observer A call back",val),
       error:(err)=> console.log("une erreur s est produite",err),
       complete:() => console.log(" observer A finished")
@@ -36,23 +36,23 @@ export class FaceSnapListComponent implements OnInit {
     subject$.next(1)// emet comme un Observable mais  le subscriber recoit les valeurs de  maniere synchrone la valeur 1 et 5 car n est pas appelé depuis une methode subscribe()
     subject$.next(5)
 
-  // le même Subject emet des valeurs a plusieurs Observers l Observer A et l Observer B qui ecoute le meme Subject au meme titre qu' un Observable mais lObservable n a qu un seul Observer dans le subscribe meme avec le constructor:
-  /* new Observable(Observer: Observer<number>)
-  observer.next(value1)
-  observer.next(value2) il s agit du meme observer*/
+    // le même Subject emet des valeurs a plusieurs Observers l Observer A et l Observer B qui ecoute le meme Subject au meme titre qu' un Observable mais lObservable n a qu un seul Observer dans le subscribe meme avec le constructor:
+    /* new Observable(Observer: Observer<number>)
+    observer.next(value1)
+    observer.next(value2) il s agit du meme observer*/
     subject$.pipe(
       map(val => val*10)
     ).subscribe({ // a la difference des Observable, ces fonctions callback observers qui son defini l objet Observer(une collection de callbacks observers) vont s executer apres la souscription au Subject, on apelle ces callbacks apres la souscription
      next:(val)=> console.log("observer B call back",val),
      error:(err)=> console.log("une erreur s est produite",err),
      complete:() => console.log("observer B finished"),
-   })
+    })
 
-   subject$.next(10) // appel de la fonction call back observer next() qui s execute apres avoir souscrit
+    subject$.next(10) // appel de la fonction call back observer next() qui s execute apres avoir souscrit
    
-   //L observer A et l observer B, ecoute tout deux le meme flux de données  du même Subject apres leur souscription respective au Subject, 
-   //a la difference l observer B a un suscriber qui a souscrit aux emisions qui on été traité par map() avant la souscription 
-   //Le subject est multicast, en un seul flux, ses données sont distribué a plusieurs point, plus precisement plusieurs Observers(2) de la methode subscribe()
+    //L observer A et l observer B, ecoute tout deux le meme flux de données  du même Subject apres leur souscription respective au Subject, 
+    //a la difference l observer B a un suscriber qui a souscrit aux emisions qui on été traité par map() avant la souscription 
+    //Le subject est multicast, en un seul flux, ses données sont distribué a plusieurs point, plus precisement plusieurs Observers(2) de la methode subscribe()
 
     const interval$ = interval(1000).pipe(
       take(10),
@@ -90,7 +90,7 @@ export class FaceSnapListComponent implements OnInit {
     //mais pas la methode subscribe, on cree  l Observable avec son constructor et son Observer apres on y souscrit
     // la methode subscribe() a 3 arguments next, error, complete
 
-   /**SNIPET DE CODE AVEC Observer**/ 
+  /**SNIPET DE CODE AVEC Observer**/ 
     // This function runs when subscribe() is called
     function sequenceSubscriber(observer: Observer<number>)
     {
@@ -110,7 +110,7 @@ export class FaceSnapListComponent implements OnInit {
     next(num) { console.log(num); },
     complete() { console.log('Finished sequence'); }
     });
-    
+
     // Logs:
     // 1
     // 2

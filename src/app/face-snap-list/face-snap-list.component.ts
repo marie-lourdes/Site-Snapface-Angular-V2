@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy} from '@angular/core';
 import { interval, Subject } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 
 import { FaceSnap } from '../models/face-snap.model';
 import { FaceSnapsService } from '../services/face-snaps.service';
@@ -34,7 +34,9 @@ export class FaceSnapListComponent implements OnInit, OnDestroy {
 
     this.subjectDestroy$ = new Subject();
 
-    interval$.subscribe(val=>console.log("observable avec strategie de unsubscribe avec ngdestroy et takeUntil,Subject", val));
+    interval$.pipe(
+      takeUntil(this.subjectDestroy$)
+    ).subscribe(val=>console.log("observable avec strategie de unsubscribe avec ngdestroy et takeUntil,Subject", val));
   }
 
   ngOnDestroy(): void {

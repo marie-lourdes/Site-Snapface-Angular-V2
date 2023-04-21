@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, Observer, interval, Subject,timer} from "rxjs";
+import { Observable, Observer, interval, Subject, BehaviorSubject,timer} from "rxjs";
 import { take, map, takeUntil} from "rxjs/operators";
 import { FaceSnap } from '../models/face-snap.model';
 import { FaceSnapsService } from '../services/face-snaps.service';
@@ -17,6 +17,8 @@ export class FaceSnapListComponent implements OnInit {
 
   ngOnInit(): void {
     this.faceSnaps = this.faceSnapsService.getAllFaceSnaps();
+
+    /*SUBJECT*/
     const subject$ = new Subject<number>()
  
     //Le subject peut etre un observable et un observateur, il emet  des valeurs comme addlistener à travers le subscribe et les observers qui ecoute
@@ -85,11 +87,18 @@ export class FaceSnapListComponent implements OnInit {
         console.log( "observable interval 2 finished")
        }
     )
+    
+    /*BEHAVIORSUBJECT AVEC VALEUR INITIAL*/
 
+    // les Subject n ont pas de valeur initial, mais les BhabiorSubject oui et c est obligatoire
+    const behaviorSubject$ = new BehaviorSubject<number>(5);
+    behaviorSubject$.subscribe(val=>console.log("log BehaviorSubject en tant qu Observer de intervazl3$ avec valeur initial et les emission de l observable interval3$"))
+    const interval3$ = interval(1000).subscribe(behaviorSubject$)
     //le subscriber fonction du constructor de Observable a un Observer qui a 4 methode (next, error, complete, unsubscribe)
     //mais pas la methode subscribe, on cree  l Observable avec son constructor et son Observer apres on y souscrit
     // la methode subscribe() a 3 arguments next, error, complete
 
+    
   /**SNIPET DE CODE AVEC Observer**/ 
     // This function runs when subscribe() is called
     function sequenceSubscriber(observer: Observer<number>)

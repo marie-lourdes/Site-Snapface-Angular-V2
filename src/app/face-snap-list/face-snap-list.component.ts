@@ -38,7 +38,8 @@ export class FaceSnapListComponent implements OnInit, OnDestroy {
     ).subscribe(val=>console.log("observable avec strategie de unsubscribe avec(take(10)", val));
 
     /*STRATEGIE-2 UNSUBSCRIBE AVEC LA DESTRUCTION DE L OBSERVABLE EN DETRUISANT LE COMPONENT*/
-    this.subjectDestroy$ = new Subject();
+    // creation de l instance de la classe Observable Subject avec le constructor qui initialise l'objet subjectDestroy$ et qui est appelé avec new 
+    this.subjectDestroy$ = new Subject<string>();
     this.subjectDestroy$.subscribe(console.log)//le subject precise et log quand le component est detruit dans sa valeur emise, avec le subscribe toujours avant de definir les valeur d'un Subject
     /* si on veut juste le faire emttre un evenement sans manipuler la valeur emise sans y souscrire directement au subject
     mais qui servira à l operator takeUntil() comme argument pour stopper les emissions de l observable

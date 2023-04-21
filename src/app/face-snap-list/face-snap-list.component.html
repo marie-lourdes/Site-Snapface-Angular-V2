@@ -1,1 +1,9 @@
-<app-face-snap *ngFor="let faceSnap of faceSnaps" [faceSnap]="faceSnap"></app-face-snap>
+<main>
+    <app-face-snap class="face-snap" *ngFor="let faceSnap of faceSnaps" [faceSnap]="faceSnap"></app-face-snap>
+    <div> {{intervalDom$ | async }}</div>
+</main>
+
+  
+
+
+

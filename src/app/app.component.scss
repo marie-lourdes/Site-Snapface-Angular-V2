@@ -1,35 +1,4 @@
-/**TEST DE dIFFÉRENT IMPORT DE LA MEME VARIABLE: $color-interval avec @use et @import  l un modifié et l autre non**/ 
-// modification de la variable du background avec l etat :hover des observables
-@use  "../sass/utils/colors" with (
-    $color-interval: lighten(#7D1A19,50%)
-);
-@import "../sass/utils/colors";
 
-main {
-    flex-direction: column;
-}
 
-.container {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    width: 80%;   
-}
 
-.observable-interval {
-    //import de la variable $color-interval avec @import sans namespace car tous le fichier est importé, avec les valeur des variables sans modification
-    color:$color-interval;// avec @use un namespace "colors" est cree contrairement a @import
-    font-weight: 600;
-    padding:1rem;
-    width: 50%;
-    text-align: center;
-    &--width {
-        width: 250px;
-    }
-    &:hover {
-        // avec @use un namespace "colors" est cree contrairement a @import,
-        // et on peut modifiér la variable et sa valeur du fichier importé avec @use..with
-        //import de la variable $color-interval du namespace "colors"(n importe pas tous le fichier, la variable ou fonction que l onsouhaite a l aide du namespace)) crée avec @use ...with et qui a permis de modifier sa valeur
-        background-color: colors.$color-interval;
-    }
-}
+

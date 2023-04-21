@@ -17,6 +17,7 @@ export class FaceSnapListComponent implements OnInit, OnDestroy {
 
   faceSnaps!: FaceSnap[];
   subjectDestroy$!: Subject<string>;
+  intervalDom$!: Observable<number>;
 
   constructor(private faceSnapsService: FaceSnapsService) { }
 
@@ -109,6 +110,9 @@ export class FaceSnapListComponent implements OnInit, OnDestroy {
     ).subscribe(subjectAsObserver$)
     //subject en tant qu'Observer avec l implmentation des deux type Observer dejà crée pour chaque Observable, ici avec Subject en tant qu observer, 
     //l Observable aura 2 observer ui ecoutent l Observable de par le Subject
+
+    /*STRATEGIE-3 UNSUBSCRIBE AVEC LA SOUSCRIPTION DANS LE TEMPLATE AVEC LE PIPE ASYNC QUI UNSUBSCRIBE AUTOMATIQUEMENT LORS DE LA DESTRUCTION DU COMPONENT*/
+    this.intervalDom$ = interval$;
   }
   
   //on execute du code au moment de la destruction du component, ici  l emission du Subject

@@ -57,7 +57,7 @@ export class FaceSnapListComponent implements OnInit, OnDestroy {
     ).subscribe()*/
      
 
-    /*DIFFERENCE ENTRE OBSERVABLE ET SUBJECT*/
+    /***DIFFERENCE ENTRE OBSERVABLE ET SUBJECT***/
 
     //a la difference des Observables comme ceux generé par interval(), on ne peut pas les forcer a emettre, Subject permet de le faire emettre à la demande car on peut configurer l Observer de son subscribe et le faire emettre à la demande en appelant un des callback de l Observer next()
     // si on veut controler les emission d un Oservable , il  faut ajouter l objet Observer dans le constructor de l Observervable et appeler les methode de l Observer:
@@ -67,7 +67,7 @@ export class FaceSnapListComponent implements OnInit, OnDestroy {
       tap(val=>console.log("observable timer", val))
     ).subscribe()// ce callback dans subscribe est une fonction next() en premier argument qui n est utilisé qu'une fois, donc on ne peut controler chaque emission sinon ecouter toutes emissions
 
-    // Si on cree un Observer et ajoute au subscribe de l Observable:
+    /**Si on cree un Observer et ajoute au subscribe de l Observable: **/
 
     const observable$ = new Observable<number>();
     const observer$: Observer<number> = { //inititialisation du Type Observer avec l objet vide 
@@ -87,8 +87,10 @@ export class FaceSnapListComponent implements OnInit, OnDestroy {
     observable$.subscribe(observer$);
     interval$.subscribe(observer2$);
 
+    /** Si on cree plusieurs Observer dans un Subject qu on implementer comme un Observer de intervalSubjObserver$
+    et ajoute au subscribe de l Observable : **/
     const subjectAsObserver$ = new Subject<any>();
-    const observerA$: Observer<number> = { //inititialisation du Type Observer avec l objet vide 
+    const observerA$: Observer<number> = { //initialisation du Type Observer avec l objet vide 
       next:(val) => console.log("log type Observer A de subjectAsObserver$ : ",val),
       error:(error) => console.log(error),
       complete:() => console.log("observable complété ")
@@ -111,6 +113,6 @@ export class FaceSnapListComponent implements OnInit, OnDestroy {
   
   //on execute du code au moment de la desctruction du component, ici  l emission du Subject
   ngOnDestroy(): void {
-    this.subjectDestroy$.next("component detruit")// Le subject emet et complete avec une seule emission
+    this.subjectDestroy$.next("component detruit")// Le Subject emet et complete avec une seule emission
   }
 }

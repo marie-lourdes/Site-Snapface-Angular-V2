@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy} from '@angular/core';
 import { interval, Subject } from 'rxjs';
-import { take, takeUntil } from 'rxjs/operators';
+import { take, takeUntil, tap } from 'rxjs/operators';
 
 import { FaceSnap } from '../models/face-snap.model';
 import { FaceSnapsService } from '../services/face-snaps.service';
@@ -45,6 +45,10 @@ export class FaceSnapListComponent implements OnInit, OnDestroy {
     interval$.pipe(
       takeUntil(this.subjectDestroy$)// l operator takeUntil() stoppe les emission de l Observable des que le Subject ou tout autre observable passé en argument a complété
     ).subscribe(val=>console.log("observable avec strategie de unsubscribe avec ngdestroy et takeUntil,Subject", val));
+
+   /* interval$.pipe(
+      tap(val=> console.log("log tap observable:", val))
+    ).subscribe()*/
   }
 
   ngOnDestroy(): void {

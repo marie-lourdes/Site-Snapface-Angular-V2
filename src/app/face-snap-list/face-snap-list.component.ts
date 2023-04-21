@@ -111,7 +111,8 @@ export class FaceSnapListComponent implements OnInit, OnDestroy {
     //l Observable aura 2 observer ui ecoutent l Observable de par le Subject
   }
   
-  //on execute du code au moment de la desctruction du component, ici  l emission du Subject
+  //on execute du code au moment de la destruction du component, ici  l emission du Subject
+  //c est le router ici qui insere le component dans l application(<router-outlet>)  et qui detruit le FaceSnapListComponent, lorsqu il change de route sur la route d un autre component 
   ngOnDestroy(): void {
     this.subjectDestroy$.next("component detruit")// Le Subject emet et complete avec une seule emission
   }

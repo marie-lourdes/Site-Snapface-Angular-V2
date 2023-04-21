@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy} from '@angular/core';
-import { interval, Subject } from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { interval, Subject, Observer, Observable, timer } from 'rxjs';
 import { take, takeUntil, tap } from 'rxjs/operators';
 
 import { FaceSnap } from '../models/face-snap.model';
@@ -52,9 +52,61 @@ export class FaceSnapListComponent implements OnInit, OnDestroy {
       takeUntil(this.subjectDestroy$)// l operator takeUntil() stoppe les emission de l Observable des que le Subject ou tout autre observable passé en argument a complété
     ).subscribe(val=>console.log("observable avec strategie de unsubscribe avec ngdestroy et takeUntil,Subject", val));
 
-   /* interval$.pipe(
+    /* interval$.pipe(
       tap(val=> console.log("log tap observable:", val))
     ).subscribe()*/
+     
+
+    /*DIFFERENCE ENTRE OBSERVABLE ET SUBJECT*/
+
+    //a la difference des Observables comme ceux generé par interval(), on ne peut pas les forcer a emettre, Subject permet de le faire emettre à la demande car on peut configurer l Observer de son subscribe et le faire emettre à la demande en appelant un des callback de l Observer next()
+    // si on veut controler les emission d un Oservable , il  faut ajouter l objet Observer dans le constructor de l Observervable et appeler les methode de l Observer:
+    
+    //l Observable timer() tres utile pour notifier(emettre) apres le delay passé en 1erargument, et emet un number 0 par defaut au bout de ce delay, puis le 2eme argument qui est l interval
+    const timer$ = timer(5000, 1000).pipe(
+      tap(val=>console.log("observable timer", val))
+    ).subscribe()// ce callback dans subscribe est une fonction next() en premier argument qui n est utilisé qu'une fois, donc on ne peut controler chaque emission sinon ecouter toutes emissions
+
+    // Si on cree un Observer et ajoute au subscribe de l Observable:
+
+    const observable$ = new Observable<number>();
+    const observer$: Observer<number> = { //inititialisation du Type Observer avec l objet vide 
+      next:(val) => console.log("log type Observer de observable$: ",val),
+      error:(error) => console.log(error),
+      complete:() =>console.log("finished")
+    }
+    const observer2$: Observer<number> ={
+      next:(val) => console.log("log type Observer de interval$: ",val),
+      error:(error) => console.log(error),
+      complete:() =>console.log("finished")
+    }
+    observer$.next(1);
+    observer$.next(3);
+    // les deux Observers ecoutent les valeurs de leurs Observables respectif mais ne peut avoir qu un seul Observer à la fois
+    // contrairement a Subject ou on peut configurer plusieurs Observer dans chaque subscribe() au Subject qui peut etre un Observable auquel on souscrit mais aussi un Observer pour un autre Observable
+    observable$.subscribe(observer$);
+    interval$.subscribe(observer2$);
+
+    const subjectAsObserver$ = new Subject<any>();
+    const observerA$: Observer<number> = { //inititialisation du Type Observer avec l objet vide 
+      next:(val) => console.log("log type Observer A de subjectAsObserver$ : ",val),
+      error:(error) => console.log(error),
+      complete:() => console.log("observable complété ")
+    }
+    const observerB$: Observer<number> ={
+      next:(val) => console.log("log type Observer B de subjectAsObserver$: ",val),
+      error:(error) => console.log(error),
+      complete:() => console.log("Oservable complété")
+    }
+    subjectAsObserver$.subscribe(observerA$);
+    subjectAsObserver$.subscribe(observerB$);
+
+    const intervalSubjObserver$ = interval$.pipe(
+      take(10),
+      tap(val => console.log("subject en tant qu'Observer avec l implémentation des deux type Observer, Observer A et Observer B ", val))
+    ).subscribe(subjectAsObserver$)
+    //subject en tant qu'Observer avec l implmentation des deux type Observer dejà crée pour chaque Observable, ici avec Subject en tant qu observer, 
+    //l Observable aura 2 observer ui ecoutent l Observable de par le Subject
   }
   
   //on execute du code au moment de la desctruction du component, ici  l emission du Subject

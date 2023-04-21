@@ -10,6 +10,9 @@ import { FaceSnapsService } from '../services/face-snaps.service';
   templateUrl: './face-snap-list.component.html',
   styleUrls: ['./face-snap-list.component.scss']
 })
+
+//implementation life cycle hook OnInit pour le montage du component OnInit et  et life cycle hook OnDestroy pour le demontage du component 
+//dont apelle les methode respectives
 export class FaceSnapListComponent implements OnInit, OnDestroy {
 
   faceSnaps!: FaceSnap[];
@@ -52,7 +55,8 @@ export class FaceSnapListComponent implements OnInit, OnDestroy {
       tap(val=> console.log("log tap observable:", val))
     ).subscribe()*/
   }
-
+  
+  //on execute du code au moment de la desctruction du component, ici  l emission du Subject
   ngOnDestroy(): void {
     this.subjectDestroy$.next("component detruit")// Le subject emet et complete avec une seule emission
   }

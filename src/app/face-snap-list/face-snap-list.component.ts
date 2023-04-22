@@ -1,6 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subject, Observer, Observable,  of, from } from 'rxjs';
-import { tap, mergeMap, concatMap, map, delay } from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
+import { Subject, Observable,  of, from } from 'rxjs';
+import { tap, mergeMap, map, delay } from 'rxjs/operators';
 
 import { FaceSnap } from '../models/face-snap.model';
 import { FaceSnapsService } from '../services/face-snaps.service';
@@ -36,13 +36,11 @@ export class FaceSnapListComponent implements OnInit {
     const test2 = isRed === "red" ? true : false
     console.log(test)
   }
+
   processMessage$(val:string) {
       return of(val).pipe(
         map(val => `val observable interieur: ${val} proceed`),
         delay(3000)
       )
   }
-
- 
-
 }

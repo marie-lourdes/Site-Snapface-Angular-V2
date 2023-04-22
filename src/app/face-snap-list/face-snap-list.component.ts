@@ -11,7 +11,7 @@ import { FaceSnapsService } from '../services/face-snaps.service';
   styleUrls: ['./face-snap-list.component.scss']
 })
 
-//implementation life cycle hook OnInit pour le montage du component OnInit et  et life cycle hook OnDestroy pour le demontage du component 
+//implementation life cycle hook OnInit pour le montage du component OnInit et le life cycle hook OnDestroy pour le demontage du component 
 //dont apelle les methode respectives
 export class FaceSnapListComponent implements OnInit, OnDestroy {
 
@@ -51,7 +51,7 @@ export class FaceSnapListComponent implements OnInit, OnDestroy {
      */
     interval$.pipe(
       takeUntil(this.subjectDestroy$)// l operator takeUntil() stoppe les emission de l Observable des que le Subject ou tout autre observable passé en argument a complété
-    ).subscribe(val=>console.log("observable avec strategie de unsubscribe avec ngdestroy et takeUntil,Subject", val));
+    ).subscribe(val => console.log("observable avec strategie de unsubscribe avec ngdestroy et takeUntil,Subject", val));
 
     /* interval$.pipe(
       tap(val=> console.log("log tap observable:", val))
@@ -118,6 +118,7 @@ export class FaceSnapListComponent implements OnInit, OnDestroy {
   //on execute du code au moment de la destruction du component, ici  l emission du Subject
   //c est le router ici qui insere le component dans l application(<router-outlet>)  et qui detruit le FaceSnapListComponent, lorsqu il change de route sur la route d un autre component 
   ngOnDestroy(): void {
-    this.subjectDestroy$.next("component detruit")// Le Subject emet et complete avec une seule emission
+    this.subjectDestroy$.next("component detruit")
+    // Le Subject emet et complete avec une seule emission, ici souscrire au subject n est pas utile pour manipuler l emission, le but est de le faire emettre n importe qu elle valeur et takeUntil () lors de l emission dit a angular de stopper les emissions de l Observerble interval
   }
 }

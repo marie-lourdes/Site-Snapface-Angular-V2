@@ -38,7 +38,7 @@ export class FaceSnapListComponent implements OnInit {
   }
   processMessage$(val:string) {
       return of(val).pipe(
-        map(val => "val observable interieur:" +" "+ val +"proceed"),
+        map(val => `val observable interieur: ${val} proceed`),
         delay(3000)
       )
   }

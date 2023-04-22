@@ -1,5 +1,6 @@
 <main>
     <div class="observable-interval"> {{intervalDom$ | async }}</div>
+    <div class="observable-interval"> {{intervalDom2$ | async }}</div>
     <app-face-snap class="face-snap" *ngFor="let faceSnap of faceSnaps" [faceSnap]="faceSnap"></app-face-snap>   
 </main>
 

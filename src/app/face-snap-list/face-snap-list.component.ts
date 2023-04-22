@@ -56,8 +56,11 @@ export class FaceSnapListComponent implements OnInit, OnDestroy {
     /* interval$.pipe(
       tap(val=> console.log("log tap observable:", val))
     ).subscribe()*/
-     
 
+    /*STRATEGIE-3 UNSUBSCRIBE AVEC LA SOUSCRIPTION DANS LE TEMPLATE AVEC LE PIPE ASYNC QUI UNSUBSCRIBE AUTOMATIQUEMENT LORS DE LA DESTRUCTION DU COMPONENT*/
+    this.intervalDom$ = interval$;
+
+    
     /***DIFFERENCE ENTRE OBSERVABLE ET SUBJECT***/
 
     //a la difference des Observables comme ceux generé par interval(), on ne peut pas les forcer a emettre, Subject permet de le faire emettre à la demande car on peut configurer l Observer de son subscribe et le faire emettre à la demande en appelant un des callback de l Observer next()
@@ -110,9 +113,6 @@ export class FaceSnapListComponent implements OnInit, OnDestroy {
     ).subscribe(subjectAsObserver$)
     //subject en tant qu'Observer avec l implmentation des deux type Observer dejà crée pour chaque Observable, ici avec Subject en tant qu observer, 
     //l Observable aura 2 observer ui ecoutent l Observable de par le Subject
-
-    /*STRATEGIE-3 UNSUBSCRIBE AVEC LA SOUSCRIPTION DANS LE TEMPLATE AVEC LE PIPE ASYNC QUI UNSUBSCRIBE AUTOMATIQUEMENT LORS DE LA DESTRUCTION DU COMPONENT*/
-    this.intervalDom$ = interval$;
   }
   
   //on execute du code au moment de la destruction du component, ici  l emission du Subject

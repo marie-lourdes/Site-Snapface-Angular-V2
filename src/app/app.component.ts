@@ -60,7 +60,5 @@ export class AppComponent implements OnInit {
   translateColor(color: 'rouge' | 'jaune') {
     return color === 'rouge' ? 'red' : 'yellow';
 
-  }
-
-  
+  } 
 }

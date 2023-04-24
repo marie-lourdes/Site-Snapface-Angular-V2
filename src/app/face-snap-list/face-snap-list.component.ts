@@ -32,13 +32,13 @@ export class FaceSnapListComponent implements OnInit, OnDestroy {
     
     const interval$ = interval(1000);
 
-    /*STRATEGIE-1 UNSUBSCRIBE AVEC LA COMPLETION DE L OBSERVABLE EN INDIQUANT LES EMISSIONS QUI NOUS INTERESSENT*/
+    /*STRATEGIE-1 UNSUBSCRIBE TYPESCRIPT AVEC LA COMPLETION DE L OBSERVABLE EN INDIQUANT LES EMISSIONS QUI NOUS INTERESSENT*/
     //**Observable avec strategie de unsubscribe pour eviter les fuite de memoire lorsqu on est pas sur cette page virtuel en limitant les emissions avec l operator bas niveau take() et completer l observable au bout de 10 emissions
     interval$.pipe(
       take(10),
     ).subscribe(val => console.log("observable avec strategie de unsubscribe avec(take(10)", val));
 
-    /*STRATEGIE-2 UNSUBSCRIBE AVEC LA DESTRUCTION DE L OBSERVABLE EN DETRUISANT LE COMPONENT*/
+    /*STRATEGIE-2 UNSUBSCRIBE TYPESCRIPT AVEC LA DESTRUCTION DE L OBSERVABLE EN DETRUISANT LE COMPONENT*/
     // creation de l instance de la classe Observable Subject avec le constructor qui initialise l'objet subjectDestroy$ et qui est appelé avec new 
     this.subjectDestroy$ = new Subject<string>();
     this.subjectDestroy$.subscribe(console.log)//le subject precise et log quand le component est detruit dans sa valeur emise, avec le subscribe toujours avant de definir les valeur d'un Subject
@@ -57,7 +57,7 @@ export class FaceSnapListComponent implements OnInit, OnDestroy {
       tap(val=> console.log("log tap observable:", val))
     ).subscribe()*/
 
-    /*STRATEGIE-3 UNSUBSCRIBE AVEC LA SOUSCRIPTION DANS LE TEMPLATE AVEC LE PIPE ASYNC QUI UNSUBSCRIBE AUTOMATIQUEMENT LORS DE LA DESTRUCTION DU COMPONENT*/
+    /*STRATEGIE-3 UNSUBSCRIBE DOM AVEC LA SOUSCRIPTION DANS LE TEMPLATE AVEC LE PIPE ASYNC QUI UNSUBSCRIBE AUTOMATIQUEMENT LORS DE LA DESTRUCTION DU COMPONENT*/
     this.intervalDom$ = interval$;
 
     
